@@ -1,5 +1,5 @@
 # keras-rnn-demo
-A brief tutorial that uses Keras to build a basic Recurrent Neural Network Language Model and uses it to generate story text.
+A brief tutorial that uses Keras to build a basic Recurrent Neural Network Language Model and uses it generate new sentences in stories.
 
 You'll need [IPython/Jupyter](https://ipython.org/) to run the notebook (keras_rnn_generation.ipynb) or alternatively the regular Python file is provided. To run the code you'll need [Keras](https://keras.io/), as well as either [TensorFlow](https://www.tensorflow.org/) or [Theano](http://deeplearning.net/software/theano/) as the backend for Keras (the most recent version of Keras uses TensorFlow by default so you'll need to [configure](https://keras.io/backend/) it if you want to use Theano). The other requirements are [Numpy](http://www.numpy.org/) and [h5py](http://www.h5py.org/).
 
