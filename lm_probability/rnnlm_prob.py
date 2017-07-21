@@ -1,7 +1,7 @@
 
 # coding: utf-8
 
-# In[1]:
+# In[38]:
 
 import numpy, csv, pickle
 from keras.preprocessing.text import Tokenizer
@@ -13,15 +13,15 @@ from keras.layers.recurrent import GRU
 from keras.models import load_model
 
 
-# In[2]:
+# In[48]:
 
-with open('../tokenizer_96000.pkl', 'rb') as f:
+with open('tokenizer_96000.pkl', 'rb') as f:
     tokenizer = pickle.load(f)
 
-rnn = load_model('../generation_rnn_96000.h5')
+rnn = load_model('rnn_96000.h5')
 
 
-# In[24]:
+# In[49]:
 
 def get_prob(seq):
     probs = []
@@ -30,15 +30,16 @@ def get_prob(seq):
     for idx in range(seq.shape[-1] - 1):
         prob = rnn.predict_on_batch(seq[:, idx])[0,-1][seq[0, idx +1]] #get prob of next word
         probs.append(prob)
+    rnn.reset_states()
     return numpy.mean(probs) #return average probability of words in sequence
 
 
-# In[27]:
+# In[52]:
 
 get_prob("Jane was working at a diner. Suddenly, a customer barged up to the counter.")
 
 
-# In[26]:
+# In[54]:
 
 get_prob("Jane was working at a diner. Dave swam away from the shark.")
 
