@@ -20,13 +20,13 @@
 # 
 # My research is on story generation, so I've selected a dataset of stories as the text to be modeled by the RNN. They come from the [ROCStories](http://cs.rochester.edu/nlp/rocstories/) dataset, which consists of thousands of five-sentence stories about everyday life events. Here the model will observe all five sentences in each story. Then we'll use the trained model to generate the final sentence in a set of stories not observed during training.
 
-# In[7]:
+# In[1]:
 
 from __future__ import print_function #Python 2/3 compatibility for print statements
 import pprint #pretty printing
 
 
-# In[9]:
+# In[2]:
 
 '''load the training dataset'''
 import csv
@@ -49,7 +49,7 @@ pprint.pprint(train_stories[:2])
 # 
 # We need to assemble a lexicon (aka vocabulary) of words that the model needs to know. Thus, each tokenized word in the stories is added to the lexicon. We use the fit_on_texts() function to map each word in the stories to a numerical index. When working with large datasets it's common to filter all words occurring less than a certain number of times, and replace them with some generic "UNKNOWN" token. Here, because this dataset is small, every word encountered in the stories is added to the lexicon.
 
-# In[10]:
+# In[3]:
 
 '''make the lexicon'''
 
@@ -64,7 +64,7 @@ with open('example_tokenizer.pkl', 'wb') as f: #save the tokenizer
     pickle.dump(tokenizer, f)
 
 
-# In[11]:
+# In[4]:
 
 '''convert each story from text to numbers'''
 
@@ -77,7 +77,7 @@ pprint.pprint(train_idxs[0]) #show example of encoded story
 # 
 # Finally, we need to put all the training stories into a single matrix, where each row is a story and each column is a word index in that story. This enables the model to process the stories in batches as opposed to one at a time, which significantly speeds up training. However, each story has a different number of words. So we create a padded matrix equal to the length on the longest story in the training set. For all stories with fewer words, we prepend the row with zeros representing an empty word position. Then we can actually tell Keras to ignore these zeros during training.
 
-# In[12]:
+# In[5]:
 
 '''create a padded matrix of stories'''
 
@@ -94,7 +94,7 @@ pprint.pprint(train_idxs[0]) #same example story as above
 # 
 # In an RNN language model, the data is set up so that each word in the text is mapped to the word that follows it. In a given story, for each input word x[idx], the output label y[idx] is just x[idx+1].
 
-# In[13]:
+# In[6]:
 
 '''set up the model input and output'''
 
@@ -129,7 +129,7 @@ pprint.pprint(train_y[0])
 # 
 # *\**It is also possible to set n_timesteps to be less than this length and iterate over shorter sequences of words. For example, if we set n_timesteps to 10, the model will slide over each window of 10 words in the stories and perform an update to the parmaters by backpropogating the gradient over these 10 words (for the details of backpropogation, see below). However, we still want the model to "remember" everything in the story, not just the previous 10 words, so Keras provides the "stateful" option to do this. By setting "stateful=True" (here is it False), the hidden state of the model after observing 10 words will be carried over to the next word window. After all the words in a batch of stories have been processed, the reset_states() function can be called to indicate the model should now forget its hidden state and start over with the next batch of stories. You'd need to update the training function below to iterate through a batch of stories by n_timesteps at a time.*
 
-# In[14]:
+# In[7]:
 
 from keras.models import Sequential
 from keras.layers import Dense, TimeDistributed
@@ -173,7 +173,7 @@ def create_rnn(lexicon_size, n_embedding_nodes, n_hidden_nodes, batch_size, n_ti
 
 # We'll create an RNN with 300 embedding nodes and 500 hidden nodes in each recurrent layer, with a batch size of 20 stories.
 
-# In[15]:
+# In[8]:
 
 '''initialize the RNN'''
 
@@ -187,7 +187,7 @@ rnn = create_rnn(lexicon_size = len(tokenizer.word_index),
 
 # We'll train the RNN for 10 iterations through the training stories (epochs). The cross-entropy loss indicates how well the model is learning - it should go down with each epoch.
 
-# In[16]:
+# In[9]:
 
 '''train the RNN'''
 
@@ -204,7 +204,8 @@ for epoch in range(n_epochs):
         losses.append(loss)
         rnn.reset_states() #reset hidden state after each batch
     print("epoch", epoch + 1, "mean loss: %.3f" % numpy.mean(losses))
-    rnn.save('example_rnn.h5') #save model after each epoch
+    rnn.save_weights('example_rnn_weights.h5') #save parameters of model after each epoch
+    
 
 
 # ## <font color='#6629b2'>Generating sentences</font>
@@ -213,9 +214,9 @@ for epoch in range(n_epochs):
 # 
 # *\**Since the above code takes awhile to run, here I'm going to load a pre-trained model (rnn_96000.h5 and the accompanying tokenizer_96000.pkl) that was trained on 96,000 stories in this corpus for 25 epochs, with the same model parameters shown above. Obviously you should substitute the file names for your trained model here.*
 
-# In[17]:
+# In[10]:
 
-'''load the trained model; in case training was skipped, load all libaries'''
+'''in case training was skipped, load all libaries'''
 
 import numpy, pickle, csv
 from keras.preprocessing.text import Tokenizer
@@ -224,16 +225,18 @@ from keras.models import Sequential
 from keras.layers import Dense, TimeDistributed
 from keras.layers.embeddings import Embedding
 from keras.layers.recurrent import GRU
-from keras.models import load_model
+
+
+# In[11]:
+
+'''load the tokenizer'''
 
 with open('tokenizer_96000.pkl', 'rb') as f:
     tokenizer = pickle.load(f)
     print("loaded tokenizer with", len(tokenizer.word_index), "words in lexicon")
 
-rnn = load_model('rnn_96000.h5')
 
-
-# In[19]:
+# In[12]:
 
 '''load stories used for generation'''
 
@@ -250,7 +253,7 @@ print("GIVEN ENDING:", heldout_endings[0])
 
 # The model will generate word indices, so we need to map these numbers back to their corresponding strings. We'll reverse the lexicon dictionary to create a lookup table to get each word from its index.
 
-# In[20]:
+# In[13]:
 
 '''create lookup table to get string words from their indices'''
 
@@ -260,9 +263,9 @@ eos_tokens = [".", "?", "!"] #specify which characters should indicate the end o
 pprint.pprint(list(lexicon_lookup.items())[:20]) #print a sample of the lookup table
 
 
-# When generating, the model predicts one word at a time for a given story, but the trained model expects that batch size = 20 and n_timesteps = 63. The easiest thing to do is duplicate the trained model but set the batch size = 1 and n_timesteps = 1. To do this, we just create a new model with these settings and then copy the parameters (weights) of the trained model over the new model.
+# When generating, the model predicts one word at a time for a given story, but the trained model expects that batch size = 20 and n_timesteps = 63. The easiest thing to do is to create a new model with the same features as the trained model, but set the batch size = 1 and n_timesteps = 1. Then we just load the parameters (weights) from the trained model into generation model.
 
-# In[21]:
+# In[15]:
 
 '''duplicate the trained RNN but set batch size = 1 and n_timesteps = 1'''
 
@@ -271,7 +274,7 @@ generation_rnn = create_rnn(lexicon_size = len(tokenizer.word_index),
                             n_hidden_nodes = 500,
                             batch_size = 1,
                             n_timesteps = 1)
-generation_rnn.set_weights(rnn.get_weights())
+generation_rnn.load_weights('rnn_weights_96000.h5') #load weights from trained model
 
 
 # Now we can iterate through each story and generate an ending for it. For each story, we need to "load" its first four sentences into the model. This can be done using predict_on_batch() function, even though the probability distributions returned by this function are not needed when just reading the story. Because we set stateful=True when creating the RNN, Keras will keep track of the hidden state while iterating through each word, so that's why n_timesteps can be set to 1. Once the ending has been generated, we call reset_states() to clear the hidden state so that the next story can be read.
@@ -281,7 +284,7 @@ generation_rnn.set_weights(rnn.get_weights())
 # You can see that the generated endings are generally not as coherent and well-formed as the human-authored endings, but they do capture some components of the story and they are often more entertaining.
 # 
 
-# In[22]:
+# In[16]:
 
 '''use RNN to generate new endings for stories'''
 
