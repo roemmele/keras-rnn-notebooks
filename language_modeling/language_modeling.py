@@ -2,22 +2,26 @@
 # coding: utf-8
 
 # # <font color='#6629b2'>Language modeling with recurrent neural networks using Keras</font>
-# ### https://github.com/roemmele/keras-rnn-demo/language-modeling
+# ### https://github.com/roemmele/keras-rnn-notebooks
 # by Melissa Roemmele, 10/30/17, roemmele @ usc.edu
 # 
 # ## <font color='#6629b2'>Overview</font>
 # 
-# I am going to show how to build a recurrent neural network (RNN) language model that learns the relation between words in text, using the Keras library for machine learning. I will then show how this model can be used for text generation.
+# I am going to show how to build a recurrent neural network (RNN) language model that learns the relation between words in text, using the Keras library for machine learning. I will then show how this model can be used to compute the probability of a sequence, as well as generate new sequences.
 # 
 # ### <font color='#6629b2'>Language Modeling</font>
 # 
-# A language model is a model of the probability of word sequences. These models are useful for a variety of tasks, such as ones that require selecting from a set of candiate outputs as in speech recognition or machine translation, for example. Here, I'll show how a language model can be used to generate the endings of stories. Language generation is a difficult research problem which is generally addressed by more complex models than the one shown here.
+# A language model is a model of the probability of word sequences. These models are useful for a variety of tasks, such as ones that require selecting the most likely output frrom a set of candidates provided by a speech recognition or machine translation system, for example. Here, I'll show how a language model can be used to generate sequences, in particular the endings of stories. Language generation is a difficult research problem which is generally addressed by more complex models than the one shown here.
 # 
 # Traditionally, the most well-known approach to language modeling relies on n-grams. The limitation of n-gram language models is that they only explitly model the probability of a sequence of *n* words. In contrast, RNNs can model longer sequences and thus typically are better at predicting which words will appear in a sequence. See the [chapter in Jurafsky & Martin's *Speech and Language Processing*](https://web.stanford.edu/~jurafsky/slp3/4.pdf) to learn more about traditional approaches to language modeling. 
 # 
 # ### <font color='#6629b2'>Recurrent Neural Networks (RNNs)</font>
 # 
-# RNNs are a general framework for modeling sequence data and are particularly useful for natural language processing tasks. At a high level, RNN encode sequences via a set of parameters (weights) that are optimized to predict some output variable. The focus of this tutorial is on the code needed to assemble a model in Keras. For a more general introduction to RNNs, see the resources at the bottom. Here an RNN will be used as a language model, which can predict which word is likely to occur next in a text given the words before it.
+# RNNs are a general framework for modeling sequence data and are particularly useful for natural language processing tasks. At a high level, RNN encode sequences via a set of parameters (weights) that are optimized to predict some output variable. The focus of this notebook is on the code needed to assemble a model in Keras, as well as some data processing tools that facilitate building the model. 
+# 
+# If you understand how to structure the input and output of the model, and know the fundamental concepts in machine learning, then a high-level understanding of how an RNN works is sufficient for using Keras. You'll see that most of the code here is actually just data manipulation, and I'll visualize each step in this process. The code used to assemble the RNN itself is more minimal. It is of course useful to know the technical details of the RNN, so you can theorize on the results and innovate the model to make it better. For a better understanding of RNNs and neural networks in general, see the resources at the bottom of the notebook.
+# 
+# Here an RNN will be used as a language model, which can predict which word is likely to occur next in a text given the words before it.
 # 
 # ### <font color='#6629b2'>Keras</font>
 # 
@@ -27,35 +31,33 @@
 # 
 # My research is on story generation, so I've selected a dataset of stories as the text to be modeled by the RNN. They come from the [ROCStories](http://cs.rochester.edu/nlp/rocstories/) dataset, which consists of thousands of five-sentence stories about everyday life events. Here the model will observe all five sentences in each story. Then we'll use the trained model to generate the final sentence in a set of stories not observed during training. The full dataset is available at the above link and just requires filling out a form to get access. Here, I'll use a sample of 100 stories.
 
-# In[1]:
+# In[ ]:
 
 from __future__ import print_function #Python 2/3 compatibility for print statements
+import pandas
+pandas.set_option('display.max_colwidth', 300) #widen pandas rows display
 
 
 # I'll load the datasets using the [pandas library](https://pandas.pydata.org/), which is extremely useful for any task involving data storage and manipulation. This library puts a dataset into a readable table format, and makes it easy to retrieve specific columns and rows.
 
-# In[2]:
+# In[ ]:
 
 '''Load the training dataset'''
 
-import pandas
-
-train_stories = pandas.read_csv('dataset/example_train_stories.csv', encoding='utf-8')#[:100]
+train_stories = pandas.read_csv('dataset/example_train_stories.csv', encoding='utf-8')[:100]
 
 train_stories[:10]
 
 
 # ## <font color='#6629b2'>Preparing the data</font>
 # 
-# The model we'll create is a word-based language model, which means each input unit is a single word (some language models learn subword units like characters). 
+# The model we'll create is a word-based language model, which means each input unit is a single word (some language models learn subword units like characters).
 # 
-# 
-
 # ###  <font color='#6629b2'>Tokenization</font>
 # 
 # The first pre-processing step is to tokenize each of the reviews into (lowercased) individual words, since the RNN will encode the reviews word by word. For this I'll use [spacy](https://spacy.io/), which is a fast and extremely user-friendly library that performs various language processing tasks. 
 
-# In[3]:
+# In[ ]:
 
 '''Split texts into lists of words (tokens)'''
 
@@ -76,7 +78,7 @@ train_stories[['Story','Tokenized_Story']][:10]
 # 
 # Then we need to assemble a lexicon (aka vocabulary) of words that the model needs to know. Each tokenized word in the stories is added to the lexicon, and then each word is mapped to a numerical index that can be read by the model. Since large datasets may contain a huge number of unique words, it's common to filter all words occurring less than a certain number of times, and replace them with some generic &lt;UNK&gt; token. The min_freq parameter in the function below defines this threshold. In the example code, the min_freq parameter is set to 1, so the lexicon will contain all unique words in the training set. When assigning the indices, the number 1 will represent unknown words. The number 0 will represent "empty" word slots, which is explained below. Therefore "real" words will have indices of 2 or higher.
 
-# In[4]:
+# In[ ]:
 
 '''Count tokens (words) in texts and add them to the lexicon'''
 
@@ -99,26 +101,27 @@ def make_lexicon(token_seqs, min_freq=1):
     lexicon[u'<UNK>'] = 1 # Unknown words are those that occur fewer than min_freq times
     lexicon_size = len(lexicon)
 
+    print("LEXICON SAMPLE ({} total items):".format(len(lexicon)))
     print(list(lexicon.items())[:20])
     
     return lexicon
 
 lexicon = make_lexicon(token_seqs=train_stories['Tokenized_Story'], min_freq=1)
-print("{} words in lexicon".format(len(lexicon)))
 
 with open('example_model/lexicon.pkl', 'wb') as f: # Save the lexicon by pickling it
     pickle.dump(lexicon, f)
 
 
-# Because the model will output tags as indices, we'll obviously need to map each tag number back to its corresponding string representation in order to later interpret the output. We'll reverse the tags lexicon to create a lookup table to get each tag from its index.
+# When we apply the model to generation later, it will output words as indices, so we'll need to map each word number back to its corresponding string representation. We'll reverse the lexicon to create a lookup table to get each word from its index.
 
-# In[5]:
+# In[ ]:
 
 '''Make a dictionary where the string representation of a lexicon item can be retrieved from its numerical index'''
 
 def get_lexicon_lookup(lexicon):
     lexicon_lookup = {idx: lexicon_item for lexicon_item, idx in lexicon.items()}
     lexicon_lookup[0] = "" #map 0 padding to empty string
+    print("LEXICON LOOKUP SAMPLE:")
     print(list(lexicon_lookup.items())[:20])
     return lexicon_lookup
 
@@ -129,7 +132,7 @@ lexicon_lookup = get_lexicon_lookup(lexicon)
 # 
 # Once the lexicon is built, we can use it to transform each story from string tokens into a list of numerical indices.
 
-# In[6]:
+# In[ ]:
 
 '''Convert each text from a list of tokens to a list of numbers (indices)'''
 
@@ -148,7 +151,7 @@ train_stories[['Tokenized_Story', 'Story_Idxs']][:10]
 # 
 # Finally, we need to put all the training stories into a single matrix, where each row is a story and each column is a word index in that story. This enables the model to process the stories in batches as opposed to one at a time, which significantly speeds up training. However, each story has a different number of words. So we create a padded matrix equal to the length on the longest story in the training set. For all stories with fewer words, we prepend the row with zeros representing an empty word position. Then we can actually tell Keras to ignore these zeros during training.
 
-# In[7]:
+# In[ ]:
 
 '''create a padded matrix of stories'''
 
@@ -171,7 +174,7 @@ print("SHAPE:", train_padded_idxs.shape)
 # 
 # In an RNN language model, the data is set up so that each word in the text is mapped to the word that follows it. In a given story, for each input word x[idx], the output label y[idx] is just x[idx+1]. In other words, the output sequences (y) matrix will be offset by one to the right. The example below displays this alignment with the string tokens for the first story in the dataset.
 
-# In[9]:
+# In[ ]:
 
 pandas.DataFrame(list(zip(["-"] + train_stories['Tokenized_Story'].loc[0],
                           train_stories['Tokenized_Story'].loc[0])),
@@ -180,7 +183,7 @@ pandas.DataFrame(list(zip(["-"] + train_stories['Tokenized_Story'].loc[0],
 
 # To keep the padded matrices the same length, the input word matrix will also both be offset by one in the opposite direction. So the length of both the input and output matrices will be both reduced by one.
 
-# In[10]:
+# In[ ]:
 
 print(pandas.DataFrame(list(zip(train_padded_idxs[0,:-1], train_padded_idxs[0, 1:])),
                 columns=['Input Words', 'Output Words']))
@@ -196,7 +199,7 @@ print(pandas.DataFrame(list(zip(train_padded_idxs[0,:-1], train_padded_idxs[0, 1
 # 
 # **1. Input**: The input layer takes in the matrix of word indices.
 # 
-# **2. Embedding**: An [embedding input layer](https://keras.io/layers/embeddings/) that converts word indices into distributed vector representations (embeddings). The mask_zero=True parameter indicates that values of 0 in the matrix (the padding) will be ignored by the model.
+# **2. Embedding**: An [embedding input layer](https://keras.io/layers/embeddings/) that converts integer word indices into distributed vector representations (embeddings). The mask_zero=True parameter indicates that values of 0 in the matrix (the padding) will be ignored by the model.
 # 
 # **3. GRU**: A [recurrent (GRU) hidden layer](https://keras.io/layers/recurrent/), the central component of the model. As it observes each word in the story, it integrates the word embedding representation with what it's observed so far to compute a representation (hidden state) of the review at that timepoint. There are a few architectures for this layer - I use the GRU variation, Keras also provides LSTM or just the simple vanilla recurrent layer (see the materials at the bottom for an explanation of the difference). By setting return_sequences=True for this layer, it will output the hidden states for every timepoint in the model, i.e. for every word in the story.
 # 
@@ -226,7 +229,7 @@ print(pandas.DataFrame(list(zip(train_padded_idxs[0,:-1], train_padded_idxs[0, 1
 # 
 # The output of the model is a sequence of vectors, each with the same number of dimensions as the number of unique words (n_input_nodes). Each vector contains the predicted probability of each possible word appearing in that position in the sequence. Like all neural networks, RNNs learn by updating the parameters (weights) to optimize an objective (loss) function applied to the output. For this model, the objective is to minimize the cross entropy (named as "sparse_categorical_crossentropy" in the code) between the predicted word probabilities and the probabilities observed from the words that appear in the training data, resulting in probabilities that more accurately predict when a particular word will appear. This is the general procedure used for all multi-label classification tasks. Updates to the weights of the model are performed using an optimization algorithm, such as Adam used here. The details of this process are extensive; see the resources at the bottom of the notebook if you want a deeper understanding. One huge benefit of Keras is that it implements many of these details for you. Not only does it already have implementations of the types of layer architectures, it also has many of the [loss functions](https://keras.io/losses/) and [optimization methods](https://keras.io/optimizers/) you need for training various models.
 
-# In[11]:
+# In[ ]:
 
 '''Create the model'''
 
@@ -260,8 +263,8 @@ def create_model(seq_input_len, n_input_nodes, n_embedding_nodes,
     # Output shape = (batch_size, seq_input_len, n_hidden_nodes)
 
     #Layer 5
-    output_layer = TimeDistributed(Dense(n_input_nodes,
-                                         activation="softmax"), name='output_layer')(gru_layer2)
+    output_layer = TimeDistributed(Dense(n_input_nodes, activation="softmax"), 
+                                   name='output_layer')(gru_layer2)
     # Output shape = (batch_size, seq_input_len, n_input_nodes)
     
     model = Model(inputs=input_layer, outputs=output_layer)
@@ -273,7 +276,7 @@ def create_model(seq_input_len, n_input_nodes, n_embedding_nodes,
     return model
 
 
-# In[12]:
+# In[ ]:
 
 model = create_model(seq_input_len=train_padded_idxs.shape[-1] - 1, #substract 1 from matrix length because of offset 
                      n_input_nodes = len(lexicon) + 1, # Add 1 to account for 0 padding
@@ -283,38 +286,29 @@ model = create_model(seq_input_len=train_padded_idxs.shape[-1] - 1, #substract 1
 
 # ###  <font color='#6629b2'>Training</font>
 # 
-# Now we're ready to train the model. We'll call the fit() function to train the model for 10 iterations through the dataset (epochs). Keras reports the cross-entropy loss after each epoch - if the model is learning correctly, it should progressively decrease.
+# Now we're ready to train the model. We'll call the fit() function to train the model for 10 iterations through the dataset (epochs), with a batch size of 20 stories. Keras reports the cross-entropy loss after each epoch - if the model is learning correctly, it should progressively decrease.
 
-# In[13]:
+# In[ ]:
 
 '''Train the model'''
 
 # output matrix (y) has extra 3rd dimension added because sparse cross-entropy function requires one label per row
-model.fit(x=train_padded_idxs[:,1:], y=train_padded_idxs[:, 1:, None], epochs=10)
+model.fit(x=train_padded_idxs[:,:-1], y=train_padded_idxs[:, 1:, None], epochs=5, batch_size=20)
 model.save_weights('example_model/model_weights.h5') #Save model
 
 
 # ## <font color='#6629b2'>Prediction Tasks</font>
 # 
-# Now that the model is trained, we can use it for prediction. I'll show two prediction tasks: computing a probability score for a story, and generating a new ending for a story. To demonstrate both of these, I'll load a saved model previously trained on all the 96,000 stories in the training set. As opposed to training where we processed multiple stories at the same time, it will be more straightforward to demonstrate prediction on a single story at a time, especially since prediction is fast relative to training. In Keras, you can duplicate a model by loading the parameters from a saved model into a new model. Here, this new model will have a batch size of 1. It will also process a story one word at a time (seq_input_len=1), using the stateful=True parameter to remember the story that has occurred up to that word. 
+# Now that the model is trained, we can use it for prediction. I'll show two prediction tasks: computing a probability score for a story, and generating a new ending for a story. To demonstrate both of these, I'll load a saved model previously trained on the ~100,000 stories in the training set. As opposed to training where we processed multiple stories at the same time, it will be more straightforward to demonstrate prediction on a single story at a time, especially since prediction is fast relative to training. In Keras, you can duplicate a model by loading the parameters from a saved model into a new model. Here, this new model will have a batch size of 1. It will also process a story one word at a time (seq_input_len=1), using the stateful=True parameter to remember the story that has occurred up to that word. The other parameters of this prediction model are exactly the same as the trained model, which is why the weights can be readily transferred. I'll apply the model to an example test set of 100 sentences that were not observed during training.
 
-# In[20]:
-
-'''Load test set and apply same processing used for training stories'''
-
-test_stories = pandas.read_csv('dataset/example_test_stories.csv', encoding='utf-8')
-test_stories['Tokenized_Story'] = text_to_tokens(test_stories['Story'])
-test_stories['Story_Idxs'] = tokens_to_idxs(token_seqs=test_stories['Tokenized_Story'],
-                                            lexicon=lexicon)
-
-
-# In[15]:
+# In[ ]:
 
 '''Create a new test model, setting batch_size = 1, seq_input_len = 1, and stateful = True'''
 
 # Load lexicon from the saved model 
-with open('example_model/lexicon.pkl', 'rb') as f:
+with open('pretrained_model/lexicon.pkl', 'rb') as f:
     lexicon = pickle.load(f)
+lexicon_lookup = get_lexicon_lookup(lexicon)
 
 predictor_model = create_model(seq_input_len=1,
                                n_input_nodes=len(lexicon) + 1,
@@ -326,13 +320,25 @@ predictor_model = create_model(seq_input_len=1,
 predictor_model.load_weights('pretrained_model/model_weights.h5') #Load weights from saved model
 
 
+# In[ ]:
+
+'''Load test set and apply same processing used for training stories'''
+
+test_stories = pandas.read_csv('dataset/example_test_stories.csv', encoding='utf-8')
+test_stories['Tokenized_Story'] = text_to_tokens(test_stories['Story'])
+test_stories['Story_Idxs'] = tokens_to_idxs(token_seqs=test_stories['Tokenized_Story'],
+                                            lexicon=lexicon)
+
+
 # ### <font color='#6629b2'>Computing story probabilities</font>
 
 # Since the model outputs a probability distribution for each word in the story, indicating the probability of each possible next word in the story, we can use these values to get a single probability score for the story. To do this, we iterate through each word in a story, call the predict() function to get the full list of probabilites for the next word, and then extract the probability predicted for the actual next word in the story. We can average these probabilities across all words in the story to get a single value. The stateful=True parameter is what enables the model to remember the previous words in the story when predicting the probability of the next word. Becuase of this, the reset_states() function must be called at the end of reading the story in order to clear its memory for the next story.
+# 
+# We do this below to compare the probability of each story to one with an ending randomly selected from another story in the test set. Of course, a good language model should overall score the randomly selected endings as less probable than the correct endings. 
 
-# In[17]:
+# In[ ]:
 
-'''Compute the probability of a sequence according to the language model'''
+'''Compute the probability of a stories according to the language model'''
 
 import numpy
 
@@ -349,26 +355,34 @@ def get_probability(idx_seq):
     predictor_model.reset_states()
     return numpy.mean(probs) #return average probability of words in sequence
 
-print("STORY:", test_stories['Story'].loc[0])
-print("PROBABILITY:", get_probability(test_stories['Story_Idxs'].loc[0]))
+for _, test_story in test_stories[:10].iterrows():
 
+    # Split out initial four sentences in story and ending sentence
+    len_initial_story = len([word for sent in list(encoder(test_story['Story']).sents)[:-1] for word in sent])
+    token_initial_story = test_story['Tokenized_Story'][:len_initial_story]
+    idx_initial_story = test_story['Story_Idxs'][:len_initial_story]
+    token_ending = test_story['Tokenized_Story'][len_initial_story:]
+    
+    # Randomly select another story and get its ending
+    rand_story = test_stories.loc[numpy.random.choice(len(test_stories))]
+    len_rand_ending = len(list(encoder(rand_story['Story']).sents)[-1])
+    token_rand_ending = rand_story['Tokenized_Story'][-len_rand_ending:]
+    idx_rand_ending = rand_story['Story_Idxs'][-len_rand_ending:]
 
-# If we randomly shuffle all the words around in a story, for instance, the model should assign a much lower probability to the story:
+    print("INITIAL STORY:", " ".join(token_initial_story))
+    prob_given_ending = get_probability(test_story['Story_Idxs'])
+    print("GIVEN ENDING: {} (P = {:.3f})".format(" ".join(token_ending), prob_given_ending))
 
-# In[19]:
-
-shuffled_word_positions = numpy.random.permutation(len(test_stories['Tokenized_Story'].loc[0]))
-shuffled_token_story = [test_stories['Tokenized_Story'].loc[0][position] for position in shuffled_word_positions]
-shuffled_idx_story = [test_stories['Story_Idxs'].loc[0][position] for position in shuffled_word_positions]
-print("SHUFFLED STORY:", " ".join(shuffled_token_story))
-print("PROBABILITY:", get_probability(shuffled_idx_story))
+    #print("PROBABILITY:", get_probability(test_story['Story_Idxs']))
+    prob_rand_ending = get_probability(idx_initial_story + idx_rand_ending)
+    print("RANDOM ENDING: {} (P = {:.3f})".format(" ".join(token_rand_ending), prob_rand_ending), "\n")
 
 
 # ### <font color='#6629b2'>Generating sentences</font>
 # 
 # The language model can also be used to generate new text. Here, I'll give the same predictor model the first four sentences of a story in the test set and have it generate the fifth sentence. To do this, we "load" the first four sentences into the model. This can be done using predict() function. Because the model is stateful, predict() saves the representation of the story internally even though we don't need the output of this function when just reading the story. Once the final word in the fourth sentence has been read, then we can start using the resulting probability distribution to predict the first word in the fifth sentence. We can call numpy.random.choice() to randomly sample a word according to its probability. Now we again call predict() with this new word as input, which returns a probability distribution for the second word. Again, we sample from this distribution, append the newly sampled word to the previously generated word, and call predict() with this new word as input. We continue doing this until a word that ends with an end-of-sentence puncutation mark (".", "!", "?") has been selected. Just as before, reset_states() is called after the whole sentence has been generated. Then we can decode the generated ending into a string using the lexicon lookup dictionary. You can see that the generated endings are generally not as coherent and well-formed as the human-authored endings, but they do capture some components of the story and they are often more entertaining.
 
-# In[22]:
+# In[ ]:
 
 '''Use the model to generate new endings for stories'''
 
@@ -408,25 +422,35 @@ for _, test_story in test_stories[:20].iterrows():
     
 
 
-# ### <font color='#6629b2'>Visualizing inner layers</font>
+# ### <font color='#6629b2'>Visualizing data inside the model</font>
 # 
-# To help visualize the data representation inside the model, we can look at the output of each layer individually. Keras' Functional API lets you derive a new model with the layers from an existing model, so you can define the output to be a layer below the output layer in the original model. Calling predict() on this new model will produce the output of that layer for a given input. Of course, glancing at the numbers by themselves doesn't provide any interpretation of what the model has learned (although there are opportunities to [interpret these values](https://www.civisanalytics.com/blog/interpreting-visualizing-neural-networks-text-processing/)), but seeing them verifies the model is just a series of transformations from one matrix to another. The model stores its layers in the list model.layers, and you can retrieve specific layer by its position index in the model. Below is an example of the word embedding output for the first word in the first story of the test set. You can do this same thing to view any layer.
+# To help visualize the data representation inside the model, we can look at the output of each layer individually. Keras' Functional API lets you derive a new model with the layers from an existing model, so you can define the output to be a layer below the output layer in the original model. Calling predict() on this new model will produce the output of that layer for a given input. Of course, glancing at the numbers by themselves doesn't provide any interpretation of what the model has learned (although there are opportunities to [interpret these values](https://www.civisanalytics.com/blog/interpreting-visualizing-neural-networks-text-processing/)), but seeing them verifies the model is just a series of transformations from one matrix to another. The model stores its layers as the list model.layers, and you can retrieve specific layer by its position index in the model. Below is an example of the word embedding output for the first word in the first story of the test set. You can do this same thing to view any layer.
 
-# In[23]:
+# In[ ]:
 
-'''Show the output of the word embedding layer'''
+'''Show the output of the word embedding layer for the first word of the first story'''
 
 embedding_layer = Model(inputs=predictor_model.layers[0].input,
                         outputs=predictor_model.layers[1].output)
-#Show output for first predicted tag in sequence (word input is first word, tag input is 0)
 embedding_output = embedding_layer.predict(numpy.array(test_stories['Story_Idxs'][0][0])[None,None])
-print("WORD EMBEDDINGS OUTPUT SHAPE:", embedding_output.shape)
+print("EMBEDDING OUTPUT SHAPE:", embedding_output.shape)
 print(embedding_output[0]) # Print embedding vectors for first word of first story
+
+
+# It is also easy to look at the weight matrices that connect the layers. The get_weights() function will show the incoming weights for a particular layer.
+
+# In[ ]:
+
+'''Show weights that connect the hidden layer to the output layer'''
+
+hidden_to_output_weights = predictor_model.layers[-1].get_weights()[0]
+print("HIDDEN-TO_OUTPUT WEIGHTS SHAPE:", hidden_to_output_weights.shape)
+print(hidden_to_output_weights)
 
 
 # ## <font color='#6629b2'>Conclusion</font>
 # 
-# There are a good number of tutorials on RNN language models, particularly applied to text genertion. This one shows how to leverage Keras with batch training when the length of the sequences is variable. There are many ways this language model can be made to be more sophisticated. Here's a few interesting papers from the NLP community that innovate this basic model for different generation tasks:
+# There are a good number of tutorials on RNN language models, particularly applied to text genertion. This notebook shows how to leverage Keras with batch training when the length of the sequences is variable. There are many ways this language model can be made to be more sophisticated. Here's a few interesting papers from the NLP community that innovate this basic model for different generation tasks:
 # 
 # *Recipe generation:* [Globally Coherent Text Generation with Neural Checklist Models](https://homes.cs.washington.edu/~yejin/Papers/emnlp16_neuralchecklist.pdf). Chloé Kiddon, Luke Zettlemoyer, and Yejin Choi. Conference on Empirical Methods in Natural Language Processing (EMNLP), 2016.
 # 
@@ -450,883 +474,3 @@ print(embedding_output[0]) # Print embedding vectors for first word of first sto
 # 
 # Denny Britz's [tutorial](http://www.wildml.com/2015/09/recurrent-neural-networks-tutorial-part-1-introduction-to-rnns/) documents well both the technical details of RNNs and their implementation in Python.
 # 
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
-
-# In[ ]:
-
-
-
