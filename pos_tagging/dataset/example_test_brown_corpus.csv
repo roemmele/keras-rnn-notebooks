@@ -1,0 +1,101 @@
+Tokenized_Sentence,Tagged_Sentence
+He	was	about	50	years	old	.,PRON	VERB	ADV	NUM	NOUN	ADJ	.
+"``	Another	young	man	,	my	dear	?	?",.	DET	ADJ	NOUN	.	DET	NOUN	.	.
+"Really	,	you	are	most	indiscreet	to	drive	him	here	yourself	''	,	he	said	,	frowning	with	displeasure	.",ADV	.	PRON	VERB	ADV	ADJ	PRT	VERB	PRON	ADV	PRON	.	.	PRON	VERB	.	VERB	ADP	NOUN	.
+"Delphine	presented	her	cheek	for	a	kiss	,	and	the	physician	pecked	it	like	a	timid	rooster	.",NOUN	VERB	DET	NOUN	ADP	DET	NOUN	.	CONJ	DET	NOUN	VERB	PRON	ADP	DET	ADJ	NOUN	.
+"``	Dandy	is	to	be	our	house	guest	,	Louis	.",.	NOUN	VERB	PRT	VERB	DET	NOUN	NOUN	.	NOUN	.
+"I	want	the	room	in	the	attic	prepared	for	him	He	is	a	most	unusual	lad	,	quite	precocious	in	many	ways	.",PRON	VERB	DET	NOUN	ADP	DET	NOUN	VERB	ADP	PRON	PRON	VERB	DET	ADV	ADJ	NOUN	.	ADV	ADJ	ADP	ADJ	NOUN	.
+He	deserves	a	better	life	than	just	rotting	away	on	the	Prieur	plantation	''	.,PRON	VERB	DET	ADJ	NOUN	ADP	ADV	VERB	ADV	ADP	DET	NOUN	NOUN	.	.
+"``	Quite	so	,	my	dear	.",.	ADV	ADV	.	DET	NOUN	.
+His	room	will	be	ready	shortly	''	.,DET	NOUN	VERB	VERB	ADJ	ADV	.	.
+The	physician	led	the	horses	to	the	stable	after	a	cursory	glance	at	the	cringing	slave	.,DET	NOUN	VERB	DET	NOUN	ADP	DET	NOUN	ADP	DET	ADJ	NOUN	ADP	DET	VERB	NOUN	.
+"Had	Dandy	been	older	or	wiser	,	instinct	might	have	warned	him	that	he	would	be	well	advised	to	flee	from	the	Lalauries'	tender	care	if	he	valued	his	life	.",VERB	NOUN	VERB	ADJ	CONJ	ADJ	.	NOUN	VERB	VERB	VERB	PRON	ADP	PRON	VERB	VERB	ADV	VERB	PRT	VERB	ADP	DET	NOUN	ADJ	NOUN	ADP	PRON	VERB	DET	NOUN	.
+But	he	liked	the	smell	of	Delphine's	perfume	.,CONJ	PRON	VERB	DET	NOUN	ADP	NOUN	NOUN	.
+"Besides	,	her	endearments	and	caresses	in	the	carriage	had	been	new	and	stirring	experiences	to	the	simple	youth	.",ADV	.	DET	NOUN	CONJ	NOUN	ADP	DET	NOUN	VERB	VERB	ADJ	CONJ	ADJ	NOUN	ADP	DET	ADJ	NOUN	.
+"Also	,	he	was	weary	of	plantation	drudgery	and	monotony	.",ADV	.	PRON	VERB	ADJ	ADP	NOUN	NOUN	CONJ	NOUN	.
+So	Dandy	Brandon	trustingly	entered	the	house	with	Delphine	Lalaurie	and	trudged	up	the	rear	steps	to	the	attic	room	which	was	to	be	his	new	home	.,ADP	NOUN	NOUN	ADV	VERB	DET	NOUN	ADP	NOUN	NOUN	CONJ	VERB	ADP	DET	ADJ	NOUN	ADP	DET	NOUN	NOUN	DET	VERB	PRT	VERB	DET	ADJ	NOUN	.
+"Airless	and	dingy	though	it	was	,	the	attic	represented	luxury	to	a	slave	who	had	led	a	wretched	life	with	six	brothers	and	sisters	and	assorted	relatives	in	a	shanty	at	Bayou	St.	John	.",ADJ	CONJ	ADJ	ADP	PRON	VERB	.	DET	NOUN	VERB	NOUN	ADP	DET	NOUN	PRON	VERB	VERB	DET	ADJ	NOUN	ADP	NUM	NOUN	CONJ	NOUN	CONJ	VERB	NOUN	ADP	DET	NOUN	ADP	NOUN	NOUN	NOUN	.
+He	bounced	exuberantly	on	the	sagging	bed	and	was	even	more	delighted	when	Madame	Lalaurie	--	after	closing	the	door	--	showed	the	slave	that	the	bed	was	designed	for	something	other	than	slumber	.,PRON	VERB	ADV	ADP	DET	VERB	NOUN	CONJ	VERB	ADV	ADV	VERB	ADV	NOUN	NOUN	.	ADP	VERB	DET	NOUN	.	VERB	DET	NOUN	ADP	DET	NOUN	VERB	VERB	ADP	NOUN	ADJ	ADP	NOUN	.
+"It	was	just	as	well	that	the	ignorant	Dandy	enjoyed	himself	to	the	hilt	that	first	evening	,	for	the	room	was	to	become	his	prison	cell	.",PRON	VERB	ADV	ADV	ADV	ADP	DET	ADJ	NOUN	VERB	PRON	ADP	DET	NOUN	DET	ADJ	NOUN	.	ADP	DET	NOUN	VERB	PRT	VERB	DET	NOUN	NOUN	.
+"When	he	finally	left	the	sinister	mansion	on	Perdido	Street	,	he	was	carried	out	in	a	coroner's	basket	.",ADV	PRON	ADV	VERB	DET	ADJ	NOUN	ADP	NOUN	NOUN	.	PRON	VERB	VERB	PRT	ADP	DET	NOUN	NOUN	.
+"Just	six	weeks	after	Dandy	Brandon's	arrival	at	the	mansion	,	the	little	surgeon	and	his	svelte	young	wife	gave	their	annual	open	house	and	ball	,	to	which	only	New	Orleans'	oldest	and	wealthiest	families	were	invited	.",ADV	NUM	NOUN	ADP	NOUN	NOUN	NOUN	ADP	DET	NOUN	.	DET	ADJ	NOUN	CONJ	DET	ADJ	ADJ	NOUN	VERB	DET	ADJ	ADJ	NOUN	CONJ	NOUN	.	ADP	DET	ADV	ADJ	NOUN	ADJ	CONJ	ADJ	NOUN	VERB	VERB	.
+"A	stringed	orchestra	played	softly	behind	the	potted	palms	,	and	Delphine	circulated	graciously	among	her	guests	,	chatting	airily	of	the	forthcoming	races	,	the	latest	fashions	from	Paris	,	and	Louisiana	politics	.",DET	VERB	NOUN	VERB	ADV	ADP	DET	VERB	NOUN	.	CONJ	NOUN	VERB	ADV	ADP	PRON	NOUN	.	VERB	ADV	ADP	DET	ADJ	NOUN	.	DET	ADJ	NOUN	ADP	NOUN	.	CONJ	NOUN	NOUN	.
+"Suddenly	there	was	a	commotion	upstairs	,	a	despairing	boyish	shriek	,	and	the	strains	of	the	waltz	faltered	and	died	as	the	musicians	and	guests	gaped	at	an	apparition	descending	the	marble	staircase	.",ADV	PRT	VERB	DET	NOUN	ADV	.	DET	VERB	ADJ	NOUN	.	CONJ	DET	NOUN	ADP	DET	NOUN	VERB	CONJ	VERB	ADP	DET	NOUN	CONJ	NOUN	VERB	ADP	DET	NOUN	VERB	DET	NOUN	NOUN	.
+"It	was	Dandy	Brandon	,	clad	only	in	a	bloody	loincloth	,	emaciated	and	quaking	as	if	the	devil	were	breathing	hard	on	him	.",PRON	VERB	NOUN	NOUN	.	VERB	ADV	ADP	DET	ADJ	NOUN	.	VERB	CONJ	VERB	ADP	ADP	DET	NOUN	VERB	VERB	ADJ	ADP	PRON	.
+The	lad's	once	superb	body	was	a	mass	of	scars	and	welts	.,DET	NOUN	ADV	ADJ	NOUN	VERB	DET	NOUN	ADP	NOUN	CONJ	NOUN	.
+His	pinched	face	showed	the	ravages	of	malnutrition	.,DET	VERB	NOUN	VERB	DET	NOUN	ADP	NOUN	.
+Feebly	he	pointed	an	accusing	finger	at	Madame	Lalaurie	and	shouted	:	``	Evil	woman	!	!,ADV	PRON	VERB	DET	VERB	NOUN	ADP	NOUN	NOUN	CONJ	VERB	.	.	ADJ	NOUN	.	.
+You	did	this	you	like	to	hurt	to	beat	people	I	want	to	go	home	''	.,PRON	VERB	DET	PRON	VERB	PRT	VERB	PRT	VERB	NOUN	PRON	VERB	PRT	VERB	NOUN	.	.
+These	were	the	last	words	he	ever	uttered	.,DET	VERB	DET	ADJ	NOUN	PRON	ADV	VERB	.
+"Convulsively	,	he	spat	up	some	blood	and	collapsed	into	the	arms	of	Senator	Gaston	Berche	,	crimsoning	the	frilly	shirt	and	waistcoat	the	politician	wore	.",ADV	.	PRON	VERB	PRT	DET	NOUN	CONJ	VERB	ADP	DET	NOUN	ADP	NOUN	NOUN	NOUN	.	VERB	DET	ADJ	NOUN	CONJ	NOUN	DET	NOUN	VERB	.
+Dr.	Louis	Lalaurie	examined	the	inert	form	of	the	slave	on	the	parquet	dance	floor	and	pronounced	him	dead	.,NOUN	NOUN	NOUN	VERB	DET	ADJ	NOUN	ADP	DET	NOUN	ADP	DET	NOUN	NOUN	NOUN	CONJ	VERB	PRON	ADJ	.
+The	ball	broke	up	in	confusion	.,DET	NOUN	VERB	PRT	ADP	NOUN	.
+Guests	stared	with	horror	at	Madame	Lalaurie	and	made	speedy	departures	.,NOUN	VERB	ADP	NOUN	ADP	NOUN	NOUN	CONJ	VERB	ADJ	NOUN	.
+"Delphine	stood	like	stone	,	her	eyes	alive	with	hate	as	she	looked	down	at	the	sheeted	corpse	.",NOUN	VERB	ADP	NOUN	.	DET	NOUN	ADJ	ADP	NOUN	ADP	PRON	VERB	PRT	ADP	DET	VERB	NOUN	.
+But	at	the	coroner's	inquest	Delphine	told	a	forthright	story	.,CONJ	ADP	DET	NOUN	NOUN	NOUN	VERB	DET	ADJ	NOUN	.
+``	I	saw	the	boy	Dandy	at	the	Congo	Square	festivities	and	felt	sorry	for	him	.,.	PRON	VERB	DET	NOUN	NOUN	ADP	DET	NOUN	NOUN	NOUN	CONJ	VERB	ADJ	ADP	PRON	.
+"It	was	our	hope	to	educate	him	and	to	give	him	his	freedom	when	the	right	time	came	,	for	he	was	a	bright	and	friendly	youth	who	seemed	worthy	of	our	interest	.",PRON	VERB	DET	NOUN	PRT	VERB	PRON	CONJ	PRT	VERB	PRON	DET	NOUN	ADV	DET	ADJ	NOUN	VERB	.	ADP	PRON	VERB	DET	ADJ	CONJ	ADJ	NOUN	PRON	VERB	ADJ	ADP	DET	NOUN	.
+"After	I	paid	Monsieur	Prieur	for	Dandy	,	I	brought	him	home	,	but	he	was	ill	at	ease	and	ran	away	the	same	night	.",ADP	PRON	VERB	NOUN	NOUN	ADP	NOUN	.	PRON	VERB	PRON	NOUN	.	CONJ	PRON	VERB	ADJ	ADP	NOUN	CONJ	VERB	ADV	DET	ADJ	NOUN	.
+"How	he	returned	in	such	a	ghastly	condition	,	or	why	,	I	cannot	say	.",ADV	PRON	VERB	ADP	PRT	DET	ADJ	NOUN	.	CONJ	ADV	.	PRON	VERB	VERB	.
+Dr.	Lalaurie	and	I	didn't	even	know	he	was	in	the	house	until	the	night	of	our	ball	when	he	came	down	the	stairs	''	.,NOUN	NOUN	CONJ	PRON	VERB	ADV	VERB	PRON	VERB	ADP	DET	NOUN	ADP	DET	NOUN	ADP	DET	NOUN	ADV	PRON	VERB	ADP	DET	NOUN	.	.
+She	daubed	at	her	swimming	eyes	with	a	lacy	handkerchief	and	said	with	obvious	emotion	:	``	That	poor	boy	!	!,PRON	VERB	ADP	DET	VERB	NOUN	ADP	DET	ADJ	NOUN	CONJ	VERB	ADP	ADJ	NOUN	.	.	DET	ADJ	NOUN	.	.
+"He	must	have	fallen	in	with	evil	companions	,	for	he	was	a	simple	youth	and	quite	trusting	and	inexperienced	.",PRON	VERB	VERB	VERB	PRT	ADP	ADJ	NOUN	.	ADP	PRON	VERB	DET	ADJ	NOUN	CONJ	ADV	ADJ	CONJ	ADJ	.
+Ruffians	must	have	robbed	and	beaten	him	before	bringing	him	back	to	our	house	to	die	.,NOUN	VERB	VERB	VERB	CONJ	VERB	PRON	ADP	VERB	PRON	ADV	ADP	DET	NOUN	PRT	VERB	.
+Such	a	pitiful	end	''	!	!,PRT	DET	ADJ	NOUN	.	.	.
+"Though	the	slave's	dying	words	about	the	woman	troubled	the	coroner's	panel	,	Dandy's	accusation	was	adjudged	an	aberration	by	the	jury	and	disregarded	.",ADP	DET	NOUN	VERB	NOUN	ADP	DET	NOUN	VERB	DET	NOUN	NOUN	.	NOUN	NOUN	VERB	VERB	DET	NOUN	ADP	DET	NOUN	CONJ	VERB	.
+"The	Lalauries	were	at	the	top	rung	of	the	social	ladder	,	and	even	a	jury	didn't	feel	privileged	to	doubt	the	veracity	of	so	illustrious	a	lady	.",DET	NOUN	VERB	ADP	DET	ADJ	NOUN	ADP	DET	ADJ	NOUN	.	CONJ	ADV	DET	NOUN	VERB	VERB	ADJ	PRT	VERB	DET	NOUN	ADP	ADV	ADJ	DET	NOUN	.
+"Moreover	,	runaway	slaves	frequently	got	into	serious	trouble	in	New	Orleans'	dives	.",ADV	.	ADJ	NOUN	ADV	VERB	ADP	ADJ	NOUN	ADP	ADJ	NOUN	NOUN	.
+"So	the	verdict	was	``	death	at	the	hands	of	a	person	or	persons	unknown	''	,	and	the	elite	of	the	city	,	accepting	Delphine's	testimony	,	welcomed	her	and	the	doctor	back	into	the	fold	.",ADP	DET	NOUN	VERB	.	NOUN	ADP	DET	NOUN	ADP	DET	NOUN	CONJ	NOUN	ADJ	.	.	CONJ	DET	NOUN	ADP	DET	NOUN	.	VERB	NOUN	NOUN	.	VERB	PRON	CONJ	DET	NOUN	ADV	ADP	DET	NOUN	.
+"Once	again	life	went	its	serene	way	--	soirees	,	fox	hunts	,	balls	and	dinners	.",ADV	ADV	NOUN	VERB	DET	ADJ	NOUN	.	NOUN	.	NOUN	NOUN	.	NOUN	CONJ	NOUN	.
+The	excitement	over	Brandon's	bizarre	death	abated	and	Madame	Lalaurie's	stock	soared	when	she	resumed	her	self-imposed	chores	of	visiting	the	poor	and	bringing	cakes	and	comfort	to	destitute	patients	in	the	county	hospital	.,DET	NOUN	ADP	NOUN	ADJ	NOUN	VERB	CONJ	NOUN	NOUN	NOUN	VERB	ADV	PRON	VERB	PRON	ADJ	NOUN	ADP	VERB	DET	ADJ	CONJ	VERB	NOUN	CONJ	NOUN	ADP	ADJ	NOUN	ADP	DET	NOUN	NOUN	.
+"Then	,	on	July	2	,	there	occurred	another	incident	which	set	tongues	to	wagging	at	a	furious	clip	.",ADV	.	ADP	NOUN	NUM	.	PRT	VERB	DET	NOUN	DET	VERB	NOUN	ADP	VERB	ADP	DET	ADJ	NOUN	.
+"Mrs.	Victor	Dominique	,	socially	prominent	and	a	neighbor	of	the	Lalauries	,	chanced	to	glance	out	of	her	parlor	window	at	dusk	one	evening	and	beheld	an	amazing	sight	.",NOUN	NOUN	NOUN	.	ADV	ADJ	CONJ	DET	NOUN	ADP	DET	NOUN	.	VERB	PRT	VERB	ADP	ADP	DET	NOUN	NOUN	ADP	NOUN	NUM	NOUN	CONJ	VERB	DET	ADJ	NOUN	.
+"The	manservant	Devol	and	his	mistress	,	Delphine	Lalaurie	,	were	pursuing	a	young	girl	--	an	octoroon	of	cameo-like	beauty	--	across	the	front	lawn	of	the	Lalaurie	mansion	.",DET	NOUN	NOUN	CONJ	DET	NOUN	.	NOUN	NOUN	.	VERB	VERB	DET	ADJ	NOUN	.	DET	NOUN	ADP	ADJ	NOUN	.	ADP	DET	NOUN	NOUN	ADP	DET	NOUN	NOUN	.
+The	girl	was	not	more	than	16	.,DET	NOUN	VERB	ADV	ADJ	ADP	NUM	.
+She	was	nude	to	the	waist	and	her	tumbled	abundance	of	black	hair	did	not	conceal	the	knife	slashes	on	her	back	.,PRON	VERB	ADJ	ADP	DET	NOUN	CONJ	DET	VERB	NOUN	ADP	ADJ	NOUN	VERB	ADV	VERB	DET	NOUN	NOUN	ADP	DET	NOUN	.
+The	bleeding	girl	was	tiring	fast	;	;,DET	VERB	NOUN	VERB	VERB	ADV	.	.
+the	coachman	and	Delphine	were	gaining	on	her	as	she	raced	down	Perdido	Street	.,DET	NOUN	CONJ	NOUN	VERB	VERB	ADP	PRON	ADP	PRON	VERB	ADP	NOUN	NOUN	.
+"The	fugitive	cried	out	in	an	oddly	sibilant	voice	:	``	Help	me	,	somebody	!	!",DET	NOUN	VERB	PRT	ADP	DET	ADV	ADJ	NOUN	.	.	VERB	PRON	.	NOUN	.	.
+They	have	pulled	out	all	my	teeth	and	now	she	will	carve	out	my	tongue	with	her	hacksaw	!	!,PRON	VERB	VERB	PRT	PRT	DET	NOUN	CONJ	ADV	PRON	VERB	VERB	PRT	DET	NOUN	ADP	PRON	NOUN	.	.
+"``	Bastards	''	,	he	would	say	,	``	all	I	did	was	put	a	beat	to	that	Vivaldi	stuff	,	and	the	first	chair	clobbered	me	''	!	!",.	NOUN	.	.	PRON	VERB	VERB	.	.	PRT	PRON	VERB	VERB	VERB	DET	NOUN	ADP	DET	NOUN	NOUN	.	CONJ	DET	ADJ	NOUN	VERB	PRON	.	.	.
+"Since	then	,	and	since	the	pure	grain	had	gotten	him	divorced	from	every	decent	--	and	even	indecent	--	group	from	Greenwich	Village	to	the	Embarcadero	,	he	had	become	a	sucker-rolling	freight-jumper	.",ADP	ADV	.	CONJ	ADP	DET	ADJ	NOUN	VERB	VERB	PRON	VERB	ADP	DET	ADJ	.	CONJ	ADV	ADJ	.	NOUN	ADP	NOUN	NOUN	ADP	DET	NOUN	.	PRON	VERB	VERB	DET	ADJ	NOUN	.
+"``	There	ain't	nothin'	faster	,	or	lonelier	,	or	more	direct	than	a	cannonball	freight	when	you	wanna	go	someplace	''	,	Feathertop	would	say	.",.	PRT	VERB	NOUN	ADV	.	CONJ	ADJ	.	CONJ	ADV	ADJ	ADP	DET	NOUN	NOUN	ADV	PRON	VERB	VERB	ADV	.	.	NOUN	VERB	VERB	.
+"``	The	accommodations	may	not	be	the	poshest	,	but	man	!	!",.	DET	NOUN	VERB	ADV	VERB	DET	ADJ	.	CONJ	NOUN	.	.
+"There	ain't	nobody	askin'	for	your	ticket	stub	,	neither	''	.",PRT	VERB	NOUN	VERB	ADP	DET	NOUN	NOUN	.	ADV	.	.
+"He	had	been	conning	the	freights	for	a	long	,	long	time	now	.",PRON	VERB	VERB	VERB	DET	NOUN	ADP	DET	ADJ	.	ADJ	NOUN	ADV	.
+"Ever	since	the	hooch	,	and	the	trouble	with	the	Quartet	,	and	Midge	and	the	child	.",ADV	ADP	DET	NOUN	.	CONJ	DET	NOUN	ADP	DET	NOUN	.	CONJ	NOUN	CONJ	DET	NOUN	.
+Ever	since	all	that	.,ADV	ADP	PRT	DET	.
+It	had	been	a	very	long	time	that	had	no	form	and	no	end	.,PRON	VERB	VERB	DET	ADV	ADJ	NOUN	PRON	VERB	DET	NOUN	CONJ	DET	NOUN	.
+He	was	--	as	he	told	himself	in	the	vernacular	of	a	trade	no	longer	his	own	--	riding	the	dark	train	out	.,PRON	VERB	.	ADP	PRON	VERB	PRON	ADP	DET	NOUN	ADP	DET	NOUN	DET	ADJ	DET	ADJ	.	VERB	DET	ADJ	NOUN	PRT	.
+Out	and	out	and	never	to	return	again	.,PRT	CONJ	PRT	CONJ	ADV	PRT	VERB	ADV	.
+"Till	one	day	the	last	freight	had	been	jumped	,	the	last	pint	had	been	killed	,	the	last	beat	had	been	rapped	.",ADP	NUM	NOUN	DET	ADJ	NOUN	VERB	VERB	VERB	.	DET	ADJ	NOUN	VERB	VERB	VERB	.	DET	ADJ	NOUN	VERB	VERB	VERB	.
+That	was	the	day	it	ended	.,DET	VERB	DET	NOUN	PRON	VERB	.
+"The	freight	car	was	cold	,	early	in	the	morning	.",DET	NOUN	NOUN	VERB	ADJ	.	ADV	ADP	DET	NOUN	.
+"He	was	pressed	far	back	into	the	corner	of	the	car	on	his	hay	sacks	,	the	rattling	and	tinning	of	the	wheels	on	the	rails	almost	covering	the	sound	of	his	ocarina	.",PRON	VERB	VERB	ADV	ADV	ADP	DET	NOUN	ADP	DET	NOUN	ADP	DET	NOUN	NOUN	.	DET	NOUN	CONJ	NOUN	ADP	DET	NOUN	ADP	DET	NOUN	ADV	VERB	DET	NOUN	ADP	DET	NOUN	.
+"He	held	his	elbows	away	from	his	body	,	and	the	little	sweet	potato	trilled	neatly	and	sweetly	as	he	tickled	its	tune-belly	.",PRON	VERB	DET	NOUN	ADV	ADP	DET	NOUN	.	CONJ	DET	ADJ	ADJ	NOUN	VERB	ADV	CONJ	ADV	ADP	PRON	VERB	DET	NOUN	.
+"The	train	slowed	at	a	road	crossing	,	and	the	big	door	slid	open	;	;",DET	NOUN	VERB	ADP	DET	NOUN	NOUN	.	CONJ	DET	ADJ	NOUN	VERB	ADJ	.	.
+"at	first	gratingly	,	caught	by	grains	of	corn	--	then	with	a	clash	into	its	slot	.",ADP	ADV	ADV	.	VERB	ADP	NOUN	ADP	NOUN	.	ADV	ADP	DET	NOUN	ADP	DET	NOUN	.
+The	boy	lifted	the	girl	by	the	waist	and	set	her	on	the	lip	of	the	floor	.,DET	NOUN	VERB	DET	NOUN	ADP	DET	NOUN	CONJ	VERB	PRON	ADP	DET	NOUN	ADP	DET	NOUN	.
+"She	pulled	her	legs	up	under	her	,	to	rise	,	her	full	peasant	skirt	drawing	up	her	thighs	,	and	Feathertop's	music	pfffted	away	.",PRON	VERB	DET	NOUN	PRT	ADP	PRON	.	PRT	VERB	.	DET	ADJ	NOUN	NOUN	VERB	ADP	DET	NOUN	.	CONJ	NOUN	NOUN	VERB	ADV	.
+"``	Now	that	is	a	very	nice	,	a	very	nice	''	,	he	murmured	to	himself	,	back	in	his	corner	.",.	ADV	DET	VERB	DET	ADV	ADJ	.	DET	ADV	ADJ	.	.	PRON	VERB	ADP	PRON	.	ADV	ADP	DET	NOUN	.
+"A	little	thing	,	but	the	right	twist	for	the	action	that	counted	.",DET	ADJ	NOUN	.	CONJ	DET	ADJ	NOUN	ADP	DET	NOUN	PRON	VERB	.
+"Hot	,	that	was	the	word	,	hot	!	!",ADJ	.	DET	VERB	DET	NOUN	.	ADJ	.	.
+"Hair	like	a	morning-frightened	sparrow's	wings	,	with	the	sun	shining	down	over	them	.",NOUN	ADP	DET	ADJ	NOUN	NOUN	.	ADP	DET	NOUN	VERB	PRT	ADP	PRON	.
+"A	poet	,	yet	!	!",DET	NOUN	.	ADV	.	.
+"His	thoughts	for	the	swanlike	neck	,	the	full	,	high	breasts	,	the	slim	waist	,	and	the	long	legs	were	less	than	poetic	,	however	.",DET	NOUN	ADP	DET	ADJ	NOUN	.	DET	ADJ	.	ADJ	NOUN	.	DET	ADJ	NOUN	.	CONJ	DET	ADJ	NOUN	VERB	ADJ	ADP	ADJ	.	ADV	.
+Zingggg-O	!	!,PRT	.	.
+"Then	the	boy	straight-armed	himself	up	,	twisting	at	the	last	moment	so	he	landed	sitting	.",ADV	DET	NOUN	VERB	PRON	PRT	.	VERB	ADP	DET	ADJ	NOUN	ADP	PRON	VERB	VERB	.
+"He	was	less	to	see	,	but	Feathertop	took	him	in	,	too	,	just	to	keep	the	records	straight	.",PRON	VERB	ADJ	PRT	VERB	.	CONJ	NOUN	VERB	PRON	PRT	.	ADV	.	ADV	PRT	VERB	DET	NOUN	ADJ	.
+"Curly	hair	,	high	cheekbones	,	wide	gnomelike	mouth	,	a	pair	of	drummer's	blocky	hands	,	and	a	body	that	said	well	,	maybe	I	can	wrestle	you	for	ten	minutes	--	but	then	I'm	finished	.",ADJ	NOUN	.	ADJ	NOUN	.	ADJ	ADJ	NOUN	.	DET	NOUN	ADP	NOUN	ADJ	NOUN	.	CONJ	DET	NOUN	PRON	VERB	ADV	.	ADV	PRON	VERB	VERB	PRON	ADP	NUM	NOUN	.	CONJ	ADV	PRT	VERB	.
+"``	We	made	it	,	Cappy	''	,	the	chick	said	.",.	PRON	VERB	PRON	.	NOUN	.	.	DET	NOUN	VERB	.
+"``	Yeah	,	seems	so	,	don't	it	''	,	the	boy	laughed	,	hugging	her	close	.",.	ADV	.	VERB	ADV	.	VERB	PRON	.	.	DET	NOUN	VERB	.	VERB	PRON	ADV	.
+``	Ah-ah	''	!	!,.	PRT	.	.	.
+"Feathertop	interrupted	,	standing	up	,	brushing	the	pig	offal	from	his	dirty	pants	.",NOUN	VERB	.	VERB	PRT	.	VERB	DET	NOUN	NOUN	ADP	DET	ADJ	NOUN	.
+``	None	of	that	.,.	NOUN	ADP	DET	.
+We	run	a	respectable	house	here	''	.,PRON	VERB	DET	ADJ	NOUN	ADV	.	.
+"They	whirled	and	saw	him	,	standing	there	dim	in	the	slatted	light	from	the	boarded	freight	wall	.",PRON	VERB	CONJ	VERB	PRON	.	VERB	ADV	ADJ	ADP	DET	ADJ	ADJ	ADP	DET	VERB	NOUN	NOUN	.
+"He	was	big	,	and	filthy	,	and	his	toes	stuck	out	of	the	flapping	tops	of	his	shoes	.",PRON	VERB	ADJ	.	CONJ	ADJ	.	CONJ	DET	NOUN	VERB	ADP	ADP	DET	VERB	NOUN	ADP	DET	NOUN	.
+He	held	the	black	plastic	kazoo	lightly	.,PRON	VERB	DET	ADJ	ADJ	NOUN	ADV	.
+"``	Come	sit	''	,	said	Feathertop	,	motioning	them	toward	him	.",.	VERB	VERB	.	.	VERB	NOUN	.	VERB	PRON	ADP	PRON	.
+``	That	crap	is	softer	over	here	''	.,.	DET	NOUN	VERB	ADJ	ADP	ADV	.	.
+"The	girl	smiled	,	and	started	forward	.",DET	NOUN	VERB	.	CONJ	VERB	ADV	.
