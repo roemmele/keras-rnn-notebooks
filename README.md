@@ -5,4 +5,4 @@ You'll need [IPython/Jupyter](https://ipython.org/) to run the notebooks, of cou
 
 For each task, there is a dataset/ folder that contains example training and testing files for a larger dataset (to which the link is provided in the notebook). The notebooks load these example datasets and train example models, which are saved to the example_model/ folder. The corresponding pretrained_model/ folder contains models that have been previously trained on the full dataset, and the notebooks load these full models to demonstrate prediction and evaluation.
 
-Feel free to provide feedback about any issues, or suggestions for what would be helpful: roemmele@ict.usc.edu.
+Feel free to provide feedback about any issues, or suggestions for what would be helpful: mroemmele@sdl.com.
